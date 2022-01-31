@@ -3,6 +3,7 @@ package com.widget.yieldcurve
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
 import com.github.mikephil.charting.charts.LineChart
@@ -70,6 +71,10 @@ internal fun updateAppWidget(
                 chart.axisLeft.setDrawAxisLine(false)
                 chart.axisRight.setDrawAxisLine(false)
                 chart.xAxis.setDrawAxisLine(false)
+                chart.setBackgroundColor(Color.DKGRAY)
+                chart.data.setValueTextColor(Color.WHITE)
+                chart.legend.textColor = Color.WHITE
+                chart.xAxis.textColor = Color.WHITE
                 chart.measure(
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY))
