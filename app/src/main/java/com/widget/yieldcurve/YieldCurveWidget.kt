@@ -10,6 +10,8 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.widget.yieldcurve.chart.TermAxisFormatter
 import com.widget.yieldcurve.config.RetrofitConfig
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -53,13 +55,15 @@ internal fun updateAppWidget(
             { response -> run {
                 val chart = LineChart(context)
                 val entries = listOf(
-                    Entry(0.3F, response[0].yield_3m),
+                    Entry(1F, response[0].yield_3m),
                     Entry(2F, response[0].yield_2y),
-                    Entry(5F, response[0].yield_5y),
-                    Entry(10F, response[0].yield_10y),
-                    Entry(30F, response[0].yield_30y)
+                    Entry(3F, response[0].yield_5y),
+                    Entry(5F, response[0].yield_10y),
+                    Entry(7F, response[0].yield_30y)
                 )
                 val dataSet = LineDataSet(entries, "US Treasury Yield Curve")
+                dataSet.lineWidth = 2F
+                dataSet.circleRadius = 4F
                 chart.data = LineData(dataSet)
                 chart.description.isEnabled = false
                 chart.axisLeft.setDrawLabels(false)
@@ -75,6 +79,9 @@ internal fun updateAppWidget(
                 chart.data.setValueTextColor(Color.WHITE)
                 chart.legend.textColor = Color.WHITE
                 chart.xAxis.textColor = Color.WHITE
+                chart.xAxis.valueFormatter = TermAxisFormatter(arrayOf("3m", "2y", "5y", "10y", "30y"))
+                chart.xAxis.labelCount = entries.size
+                chart.xAxis.granularity = 1F
                 chart.measure(
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY))
