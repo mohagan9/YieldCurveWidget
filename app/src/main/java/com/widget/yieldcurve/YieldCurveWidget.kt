@@ -60,6 +60,7 @@ internal fun updateAppWidget(
                 )
                 val dataSet = LineDataSet(entries, "US Treasury Yield Curve")
                 chart.data = LineData(dataSet)
+                chart.description.isEnabled = false
                 chart.measure(
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY))
