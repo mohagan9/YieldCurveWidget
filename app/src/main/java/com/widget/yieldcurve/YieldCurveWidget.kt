@@ -61,6 +61,15 @@ internal fun updateAppWidget(
                 val dataSet = LineDataSet(entries, "US Treasury Yield Curve")
                 chart.data = LineData(dataSet)
                 chart.description.isEnabled = false
+                chart.axisLeft.setDrawLabels(false)
+                chart.axisRight.setDrawLabels(false)
+                chart.axisLeft.setDrawGridLines(false)
+                chart.axisRight.setDrawGridLines(false)
+                chart.xAxis.setDrawGridLines(false)
+                chart.setDrawBorders(false)
+                chart.axisLeft.setDrawAxisLine(false)
+                chart.axisRight.setDrawAxisLine(false)
+                chart.xAxis.setDrawAxisLine(false)
                 chart.measure(
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY))
