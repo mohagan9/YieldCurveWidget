@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.YieldCurveWidget.AppWidgetContainer">
 
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/baseline_cached_24"
+        android:contentDescription="@string/refresh" />
+
     <ImageView
         android:id="@+id/chart_image"
         android:layout_width="match_parent"

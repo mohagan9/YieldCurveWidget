@@ -1,8 +1,11 @@
 package com.widget.yieldcurve
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
@@ -10,7 +13,6 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.widget.yieldcurve.chart.TermAxisFormatter
 import com.widget.yieldcurve.config.RetrofitConfig
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,6 +31,16 @@ class YieldCurveWidget : AppWidgetProvider() {
     ) {
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+
+        if ("android.appwidget.action.APPWIDGET_UPDATE" == intent.action) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val componentName = ComponentName(context, YieldCurveWidget::class.java)
+            onUpdate(context, appWidgetManager, appWidgetManager.getAppWidgetIds(componentName))
         }
     }
 
@@ -83,12 +95,13 @@ internal fun updateAppWidget(
                 chart.xAxis.labelCount = entries.size
                 chart.xAxis.granularity = 1F
                 chart.measure(
-                    View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY))
+                    View.MeasureSpec.makeMeasureSpec(500, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(500, View.MeasureSpec.EXACTLY))
                 chart.layout(0, 0, chart.measuredWidth, chart.measuredHeight)
 
                 val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
                 views.setImageViewBitmap(R.id.chart_image, chart.chartBitmap)
+                views.setOnClickPendingIntent(R.id.refresh_button, getPendingSelfIntent(context))
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             } },
@@ -96,4 +109,10 @@ internal fun updateAppWidget(
 
             } }
         )
+}
+
+private fun getPendingSelfIntent(context: Context): PendingIntent? {
+    val intent = Intent(context, YieldCurveWidget::class.java)
+    intent.action = "android.appwidget.action.APPWIDGET_UPDATE"
+    return PendingIntent.getBroadcast(context, 0, intent, 0)
 }

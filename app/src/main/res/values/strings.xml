@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Yield Curve Widget</string>
-    <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">US Treasury Yield Curve</string>
+    <string name="refresh">refresh</string>
 </resources>
