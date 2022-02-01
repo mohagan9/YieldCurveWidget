@@ -45,11 +45,17 @@ class YieldCurveWidget : AppWidgetProvider() {
     }
 
     override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val componentName = ComponentName(context, YieldCurveWidget::class.java)
+
+        val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
+        views.setOnClickPendingIntent(R.id.refresh_button, getPendingSelfIntent(context))
+
+        for (appWidgetId in appWidgetManager.getAppWidgetIds(componentName))
+            appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
     override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 }
 
@@ -103,7 +109,6 @@ internal fun updateAppWidget(
 
                 val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
                 views.setImageViewBitmap(R.id.chart_image, chart.chartBitmap)
-                views.setOnClickPendingIntent(R.id.refresh_button, getPendingSelfIntent(context))
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             } },
