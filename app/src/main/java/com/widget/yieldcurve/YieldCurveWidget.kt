@@ -78,6 +78,7 @@ internal fun updateAppWidget(
                 dataSet.circleRadius = 4F
                 chart.data = LineData(dataSet)
                 chart.description.text = currentDate
+                chart.description.textColor = Color.LTGRAY
                 chart.axisLeft.setDrawLabels(false)
                 chart.axisRight.setDrawLabels(false)
                 chart.axisLeft.setDrawGridLines(false)
@@ -89,6 +90,7 @@ internal fun updateAppWidget(
                 chart.xAxis.setDrawAxisLine(false)
                 chart.setBackgroundColor(Color.DKGRAY)
                 chart.data.setValueTextColor(Color.WHITE)
+                chart.data.setValueTextSize(8F)
                 chart.legend.textColor = Color.WHITE
                 chart.xAxis.textColor = Color.WHITE
                 chart.xAxis.valueFormatter = TermAxisFormatter(arrayOf("3m", "2y", "5y", "10y", "30y"))
