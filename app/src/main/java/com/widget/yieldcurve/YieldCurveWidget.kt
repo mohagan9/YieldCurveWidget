@@ -77,7 +77,7 @@ internal fun updateAppWidget(
                 dataSet.lineWidth = 2F
                 dataSet.circleRadius = 4F
                 chart.data = LineData(dataSet)
-                chart.description.isEnabled = false
+                chart.description.text = currentDate
                 chart.axisLeft.setDrawLabels(false)
                 chart.axisRight.setDrawLabels(false)
                 chart.axisLeft.setDrawGridLines(false)
