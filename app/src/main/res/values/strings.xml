@@ -3,4 +3,5 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">US Treasury Yield Curve</string>
     <string name="refresh">refresh</string>
+    <string name="how_to_add_widget">Press and hold on the home-screen to add the widget!</string>
 </resources>
