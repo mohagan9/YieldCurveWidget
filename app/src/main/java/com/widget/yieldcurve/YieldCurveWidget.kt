@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Icon
 import android.view.View
 import android.widget.RemoteViews
 import com.github.mikephil.charting.charts.LineChart
@@ -63,6 +64,8 @@ class YieldCurveWidget : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
     }
 }
+
+var hasLoaded = false
 
 internal fun updateAppWidget(
     context: Context,
@@ -122,9 +125,15 @@ internal fun updateAppWidget(
                 views.setImageViewBitmap(R.id.chart_image, chart.chartBitmap)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
+                hasLoaded = true
             } },
             { error -> run {
+                if (!hasLoaded) {
+                    val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
+                    views.setImageViewIcon(R.id.chart_image, Icon.createWithResource(context, R.drawable.error))
 
+                    appWidgetManager.updateAppWidget(appWidgetId, views)
+                }
             } }
         )
 }
