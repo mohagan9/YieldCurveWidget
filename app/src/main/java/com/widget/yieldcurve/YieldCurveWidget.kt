@@ -57,15 +57,14 @@ class YieldCurveWidget : AppWidgetProvider() {
         val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
         views.setOnClickPendingIntent(R.id.refresh_button, getPendingSelfIntent(context))
 
-        for (appWidgetId in appWidgetManager.getAppWidgetIds(componentName))
+        for (appWidgetId in appWidgetManager.getAppWidgetIds(componentName)) {
             appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
     }
 
     override fun onDisabled(context: Context) {
     }
 }
-
-var hasLoaded = false
 
 internal fun updateAppWidget(
     context: Context,
@@ -73,6 +72,10 @@ internal fun updateAppWidget(
     appWidgetId: Int,
     curveColorCalculator: YieldCurveColorCalculator
 ) {
+    val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
+    views.setImageViewIcon(R.id.error_icon, Icon.createWithResource(context, R.drawable.baseline_schedule_24))
+    appWidgetManager.updateAppWidget(appWidgetId, views)
+
     val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
     val disposable = RetrofitConfig.yieldCurveApi()
         .getYieldCurveSnapshot(currentDate)
@@ -123,17 +126,15 @@ internal fun updateAppWidget(
 
                 val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
                 views.setImageViewBitmap(R.id.chart_image, chart.chartBitmap)
+                views.setImageViewResource(R.id.error_icon, R.drawable.transparent)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
-                hasLoaded = true
             } },
             { error -> run {
-                if (!hasLoaded) {
-                    val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
-                    views.setImageViewIcon(R.id.chart_image, Icon.createWithResource(context, R.drawable.error))
+                val views = RemoteViews(context.packageName, R.layout.yield_curve_widget)
+                views.setImageViewIcon(R.id.error_icon, Icon.createWithResource(context, R.drawable.error))
 
-                    appWidgetManager.updateAppWidget(appWidgetId, views)
-                }
+                appWidgetManager.updateAppWidget(appWidgetId, views)
             } }
         )
 }
