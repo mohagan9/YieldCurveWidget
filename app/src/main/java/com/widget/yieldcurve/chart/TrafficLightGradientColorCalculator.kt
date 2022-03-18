@@ -11,6 +11,7 @@ class TrafficLightGradientColorCalculator : YieldCurveColorCalculator {
         val mostInverted = minOf(
             curveSnapshot.yield_2y - curveSnapshot.yield_3m,
             curveSnapshot.yield_10y - curveSnapshot.yield_2y,
+            curveSnapshot.yield_10y - curveSnapshot.yield_5y,
             curveSnapshot.yield_30y - curveSnapshot.yield_5y
         )
         val red = constrainChannel(2 - (mostInverted * 2))

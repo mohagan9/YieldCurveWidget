@@ -349,7 +349,7 @@ class TrafficLightGradientColorCalculatorTest {
             yield_3y = 0F,
             yield_5y = 2.05F,
             yield_7y = 0F,
-            yield_10y = 2.25F,
+            yield_10y = 2.3F,
             yield_20y = 5F,
             yield_30y = 2.75F
         )
